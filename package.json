@@ -1,0 +1,17 @@
+{
+  "name": "sawit-utils",
+  "description": "A palm-based utility for single-ball programmers who think palms are trees.",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "moment": "^2.30.1",
+    "moment-timezone": "^0.6.0"
+  },
+  "devDependencies": {
+    "vitest": "^4.0.18"
+  }
+}
