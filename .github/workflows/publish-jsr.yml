@@ -9,11 +9,16 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@6
-      - name: Use a custom action (example)
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+        
+      - name: Setup Node
         uses: actions/setup-node@v4
         with: 
             node-version: '24'
+
+      - name: Install Package
+        run: npm install
             
       - name: Publish package
         run: npx jsr publish
