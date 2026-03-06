@@ -10,6 +10,14 @@
     ".js": {
       "enabled": false,
       "run": "typescript-language-server --stdio"
+    },
+    ".ts": {
+      "enabled": false,
+      "run": "typescript-language-server --stdio"
+    },
+    ".yml": {
+      "enabled": false,
+      "run": "yaml-language-server --stdio"
     }
   }
 }

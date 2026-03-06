@@ -1,5 +1,7 @@
 name: Publish to JSR
 on:
+  release:
+    types: [created]
   workflow_dispatch: 
 
 jobs:
@@ -17,8 +19,10 @@ jobs:
         with: 
             node-version: '24'
 
-      - name: Install Package
+      - name: Install Package & Run Tests
         run: npm install
+        run: npm ci
+        run: npm test
             
       - name: Publish package
         run: npx jsr publish
