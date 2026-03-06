@@ -19,10 +19,11 @@ jobs:
         with: 
             node-version: '24'
 
-      - name: Install Package & Run Tests
+      - name: Install Package
         run: npm install
-        run: npm ci
-        run: npm test
-            
+
+      - name: Run Tests
+        run: npm Test
+        
       - name: Publish package
         run: npx jsr publish
