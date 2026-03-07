@@ -3,9 +3,17 @@
   "description": "A palm-based utility for single-ball programmers who think palms are trees.",
   "version": "0.1.0",
   "type": "module",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+      ".": "./src/index.js"
+  },
+  "files": [
+      "src"
+  ],
   "scripts": {
     "start": "node index.js",
-    "test": "vitest"
+    "test": "vitest src/tests"
   },
   "dependencies": {
     "moment": "^2.30.1",

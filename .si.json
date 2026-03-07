@@ -18,6 +18,10 @@
     ".yml": {
       "enabled": false,
       "run": "yaml-language-server --stdio"
+    },
+    ".md": {
+      "enabled": false,
+      "run": "marksman server"
     }
   }
 }
