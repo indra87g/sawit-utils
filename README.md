@@ -1,5 +1,7 @@
 # Sawit Utils
 
+[![NPM](https://nodei.co/npm/sawit-utils.png?downloads=true&downloadRank=true&stars=true)](https://ktik.me/indra87g)
+
 A palm-based library for your various project needs. I actually created this package solely for personal use in my WhatsApp bot project. 
 However, if you'd like to use it too, feel free to do so :D 
 ## Getting Started
