@@ -1,3 +1,10 @@
+/**
+ * Calculates the Levenshtein distance between two strings.
+ * @param {string} value - The first string.
+ * @param {string} other - The second string.
+ * @param {number} [maxDistance=Infinity] - The maximum distance allowed before bailing out.
+ * @returns {number} The Levenshtein distance.
+ */
 export const levenshtein = (value, other, maxDistance = Infinity) => {
   if (value === other) return 0;
   if (!value.length) return other.length;
@@ -26,6 +33,13 @@ export const levenshtein = (value, other, maxDistance = Infinity) => {
   return v1[other.length];
 };
 
+/**
+ * Finds the top matching commands based on the input string using Levenshtein distance.
+ * @param {string} input - The user input.
+ * @param {string[]} [commands=[]] - The list of available commands.
+ * @param {number} [limit=3] - The maximum number of suggestions to return.
+ * @returns {string[]} An array of top suggested commands.
+ */
 export const findTopSuggestions = (input, commands = [], limit = 3) => {
   const query = String(input || "").toLowerCase().trim();
   if (!query) return [];
@@ -40,6 +54,11 @@ export const findTopSuggestions = (input, commands = [], limit = 3) => {
     .map((item) => item.command);
 };
 
+/**
+ * Escapes HTML characters in a string to prevent XSS attacks.
+ * @param {string} text - The input string to escape.
+ * @returns {string} The escaped string.
+ */
 export const escapeHTML = (text) => {
   if (!text) return "";
   return text

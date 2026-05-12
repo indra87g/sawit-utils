@@ -1,3 +1,8 @@
+/**
+ * Scrapes Instagram video or reel data based on the provided URL.
+ * @param {string} url - The Instagram URL.
+ * @returns {Promise<{success: boolean, data?: {username: string|null, thumbnail: string|null, videos: Array<{url: string, quality: string}>, videoUrl: string|null, alternativeUrl: string|null}, error?: string}>} The scraped Instagram data or an error.
+ */
 export async function igdl(url) {
   try {
     const reelCode = (() => {
