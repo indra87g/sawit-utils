@@ -1,27 +1,13 @@
-import moment from "moment-timezone";
+export * from "./format.js";
+export * from "./string.js";
+export * from "./validation.js";
+export { igdl } from "./scraper/igdl.js";
 
-export function convertMsToDuration(ms) {
-  if (!ms || ms <= 0) return "0 seconds";
-
-  const duration = moment.duration(ms);
-  const hasLargerUnits = duration.asSeconds() >= 1;
-
-  const parts = [];
-
-  if (duration.years() > 0) parts.push(`${duration.years()} years`);
-  if (duration.months() > 0) parts.push(`${duration.months()} months`);
-  if (duration.weeks() > 0) parts.push(`${duration.weeks()} weeks`);
-  if (duration.days() > 0) parts.push(`${duration.days()} days`);
-  if (duration.hours() > 0) parts.push(`${duration.hours()} hours`);
-  if (duration.minutes() > 0) parts.push(`${duration.minutes()} minutes`);
-  if (duration.seconds() > 0) parts.push(`${duration.seconds()} seconds`);
-
-  if (!hasLargerUnits && duration.milliseconds() > 0)
-    parts.push(`${duration.milliseconds()} milliseconds`);
-
-  return parts.join(" ") || "0 detik";
-}
-
+/**
+ * Generates a unique ID based on the provided string.
+ * @param {string} id - The base string to generate UID from.
+ * @returns {string|null} The generated UID or null if the input is empty.
+ */
 export function generateUID(id) {
   if (!id) return null;
 
@@ -36,17 +22,22 @@ export function generateUID(id) {
   return uid;
 }
 
+/**
+ * Gets a random element from the provided array.
+ * @param {Array<any>} array - The array to get an element from.
+ * @returns {any|null} The random element or null if the array is empty.
+ */
 export function getRandomElement(array) {
   if (!array || !array.length || array.length === 0) return null;
   return array[Math.floor(Math.random() * array.length)];
 }
 
+/**
+ * Delays execution by the specified milliseconds.
+ * @param {number} ms - The number of milliseconds to delay.
+ * @returns {Promise<void>|null} A Promise that resolves after the specified delay, or null if no ms is provided.
+ */
 export function delay(ms) {
   if (!ms) return null;
   return new Promise((res) => setTimeout(res, ms));
 }
-
-export * from "./format.js";
-export * from "./string.js";
-export * from "./validation.js";
-export { igdl } from "./scraper/igdl.js";
