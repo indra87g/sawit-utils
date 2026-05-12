@@ -25,12 +25,6 @@ const instagram = await igdl(URL);
 console.log(instagram.data.videoUrl);
 ```
 
-## Planned Feature
-- Payment API
-	- Mustikapay
-    - Zakkistore
-    - Pakasir
-
 ## Contributing
 ### Procedures 
 - Fork this repository
