@@ -38,3 +38,8 @@ Direktori & File Utama:
 
 5. **Kesiapan Publikasi (npm & jsr)**
    - Codebase kini clean (bebas error), fully typed, documented, serta dilengkapi dengan comprehensive test suite sehingga publikasi di kedua platform tidak akan terhambat oleh error format, syntax, maupun tipe.
+
+## 2024-05-18 — Fixing Coverage for sawit-utils
+**Context:** Added extensive vitest coverage for edge cases across the codebase as instructed by AGENTS.md.
+**Finding:** Tested edge cases like empty queries for `findTopSuggestions`, invalid regex pattern matching logic in `igdl`, different hour ranges in `greeting`, and looping bounds for `formatSize`. Code handles edge cases gracefully, but testing Instagram scraping required intercepting execution flow logically to simulate success/error.
+**Impact:** `test-coverage.md` is updated and tests are far more robust. Test numbers will be used for the webhook request.
