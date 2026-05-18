@@ -1,0 +1,5 @@
+# Memberitahu sistem untuk membaca kode utama DAN folder docs/codedocs Anda
+INPUT = src/ docs/codedocs/
+
+# Memberitahu sistem untuk ikut memproses file Markdown (.md) sebagai halaman dokumentasi
+FILE_PATTERNS = *.js *.ts *.md
