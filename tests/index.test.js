@@ -55,6 +55,13 @@ describe("Format Utils", () => {
     expect(formatNumber(1000)).toBe("1,000");
   });
 
+  test("formatTime", () => {
+    const timestamp = 1672531200000; // 2023-01-01T00:00:00Z
+    expect(formatTime(timestamp, "en-US", { timeZone: "UTC" })).toBe("01/01/2023, 00:00:00");
+    expect(formatTime(timestamp, "id-ID", { timeZone: "UTC" })).toBe("01/01/2023, 00.00.00");
+    expect(formatTime(timestamp, "en-US", { month: "long", timeZone: "UTC" })).toContain("January");
+  });
+
   test("formatUptime", () => {
     const past = Date.now() - 10000;
     expect(formatUptime(past)).toContain("10s");
