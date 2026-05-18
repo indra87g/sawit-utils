@@ -6,10 +6,10 @@
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "exports": {
-      ".": "./src/index.js"
+    ".": "./src/index.js"
   },
   "files": [
-      "src"
+    "src"
   ],
   "scripts": {
     "start": "node index.js",
@@ -20,6 +20,7 @@
     "moment-timezone": "^0.6.0"
   },
   "devDependencies": {
+    "@vitest/coverage-v8": "^4.1.6",
     "vitest": "^4.0.18"
   }
 }
