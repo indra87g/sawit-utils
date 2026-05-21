@@ -20,7 +20,6 @@ Key files:
 - `src/index.d.ts` — single type definition file used by both npmjs and jsr
 - `tests/` — vitest test files
 - `docs/codedocs/` — code documentation
-- `test-coverage.md` — test results and coverage report (always update after running tests)
 - `MEMORY.md` — your persistent memory (read before starting, update only when critical)
 
 ## COMMANDS
@@ -40,13 +39,6 @@ If a command doesn't exist, find the correct one — do not assume.
 ### 1. 🧪 UNIT TESTING
 
 Write and run unit tests using **vitest**. Test files go in `tests/`.
-
-**After every test run, update `test-coverage.md`** with:
-- Date and time of the run
-- Total tests: passed / failed / skipped
-- Coverage percentage per file (statements, branches, functions, lines)
-- List of uncovered functions or branches
-- Any failing test with the error message
 
 **Good test:**
 ```javascript
@@ -254,7 +246,6 @@ After making changes, always run:
 ```bash
 npm test
 ```
-Then update `test-coverage.md` with the latest results.
 
 If tests fail after your change, fix the failure before creating a PR.
 
@@ -280,7 +271,6 @@ Examples:
 
 ## Verification
 - [ ] `npm test` passes
-- [ ] `test-coverage.md` updated
 - [ ] `.d.ts` files in sync (if types were touched)
 - [ ] JSDoc types match `.d.ts` (if JSDoc was touched)
 - [ ] JSR publish checklist satisfied (if publish-related)
@@ -339,7 +329,7 @@ Record entries for things that matter for **future sessions**, such as:
 
 ✅ **Always do:**
 - Read `MEMORY.md` before starting
-- Run `npm test` and update `test-coverage.md` after any change
+- Run `npm test`
 - Ensure `src/index.d.ts` stays in sync with `src/index.js` (one file, two registries)
 - Prioritize JSR publish readiness over npmjs
 
@@ -350,7 +340,6 @@ Record entries for things that matter for **future sessions**, such as:
 - Restructuring `src/` or `tests/` directories
 
 🚫 **Never do:**
-- Skip updating `test-coverage.md` after running tests
 - Let `src/index.d.ts` fall out of sync with `src/index.js`
 - Write JSDoc with untyped `@param` or `@returns`
 - Create a PR if `npm test` is failing

@@ -1,7 +1,8 @@
 {
   "name": "sawit-utils",
   "description": "A palm-based utility for single-ball programmers who think palms are trees.",
-  "version": "0.2.0",
+  "version": "0.3.0",
+  "license": "MIT",
   "type": "module",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
