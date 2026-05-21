@@ -43,3 +43,8 @@ Direktori & File Utama:
 **Context:** Added extensive vitest coverage for edge cases across the codebase as instructed by AGENTS.md.
 **Finding:** Tested edge cases like empty queries for `findTopSuggestions`, invalid regex pattern matching logic in `igdl`, different hour ranges in `greeting`, and looping bounds for `formatSize`. Code handles edge cases gracefully, but testing Instagram scraping required intercepting execution flow logically to simulate success/error.
 **Impact:** `test-coverage.md` is updated and tests are far more robust. Test numbers will be used for the webhook request.
+
+## 2024-05-21 — Fixed `escapeHTML` and Documented `request.js` & `looksLikeCode`
+**Context:** Working to fix the failing `escapeHTML` test, and thoroughly document the codebase (`request.js` and `looksLikeCode` in `string.js`).
+**Finding:** Typo in `src/string.js` export (`escapeHtml` instead of `escapeHTML`). Tests couldn't use CommonJS `require` since it's an ESM module (Vitest throws SyntaxError), so we used ES Modules `import * as`. `looksLikeCode` successfully identifies programming patterns, and the `request.js` functions were documented with JSDoc and their types exposed in `src/index.d.ts`.
+**Impact:** `test-coverage.md` is updated. 36 out of 36 tests pass. The codebase remains publish-ready for JSR/npm.

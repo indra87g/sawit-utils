@@ -11,6 +11,8 @@ export function convertMsToDuration(ms: number): string;
 // String
 export function levenshtein(value: string, other: string, maxDistance?: number): number;
 export function findTopSuggestions(input: string, commands?: string[], limit?: number): string[];
+export function looksLikeCode(text: string): boolean;
+
 export function escapeHTML(text: string): string;
 
 // Validation
@@ -37,3 +39,13 @@ export type {
   IgdlResult,
 } from "./types/igdl.js";
 export function igdl(url: string): Promise<import("./types/igdl.js").IgdlResult>;
+
+// Request
+export function request(url: string, options?: RequestInit): Promise<any>;
+export function getContentType(url: string): Promise<string | null>;
+export function deline(path?: string, params?: Record<string, string>, options?: RequestInit): Promise<any>;
+export function faa(path?: string, params?: Record<string, string>, options?: RequestInit): Promise<any>;
+export function nekolabs(path?: string, params?: Record<string, string>, options?: RequestInit): Promise<any>;
+export function nexray(path?: string, params?: Record<string, string>, options?: RequestInit): Promise<any>;
+export function zenzxz(path?: string, params?: Record<string, string>, options?: RequestInit): Promise<any>;
+export function lexcode(path?: string, params?: Record<string, string>, options?: RequestInit): Promise<any>;
