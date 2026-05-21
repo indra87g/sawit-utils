@@ -1,3 +1,5 @@
+import * as reqUtils from "../src/request.js";
+import * as stringUtils from "../src/string.js";
 import { describe, expect, test, vi } from "vitest";
 import {
   convertMsToDuration,
@@ -206,5 +208,41 @@ describe("More igdl tests", () => {
   test("igdl valid regex pattern logic", async () => {
     const result = await igdl("https://instagram.com/p/test1234");
     expect(result.success).toBe(true);
+  });
+});
+
+describe("Request Utils", () => {
+  test("request exports are defined", () => {
+    // Just testing that the exports exist since testing actual live API requests
+    // would be flaky and slow down tests.
+    expect(reqUtils.request).toBeDefined();
+    expect(reqUtils.getContentType).toBeDefined();
+    expect(reqUtils.deline).toBeDefined();
+    expect(reqUtils.faa).toBeDefined();
+    expect(reqUtils.nekolabs).toBeDefined();
+    expect(reqUtils.nexray).toBeDefined();
+    expect(reqUtils.zenzxz).toBeDefined();
+    expect(reqUtils.lexcode).toBeDefined();
+  });
+});
+
+describe("String Utils - looksLikeCode", () => {
+
+  test("identifies code snippets", () => {
+    expect(stringUtils.looksLikeCode("function test() {}")).toBe(true);
+    expect(stringUtils.looksLikeCode("const a = 1;")).toBe(true);
+    expect(stringUtils.looksLikeCode("let b = 2;")).toBe(true);
+    expect(stringUtils.looksLikeCode("var c = 3;")).toBe(true);
+    expect(stringUtils.looksLikeCode("class Test {}")).toBe(true);
+    expect(stringUtils.looksLikeCode("() => {}")).toBe(true);
+    expect(stringUtils.looksLikeCode("console.log('test')")).toBe(true);
+    expect(stringUtils.looksLikeCode("<div>test</div>")).toBe(true);
+    expect(stringUtils.looksLikeCode("```javascript\nconsole.log('test')\n```")).toBe(true);
+  });
+
+  test("identifies non-code text", () => {
+    expect(stringUtils.looksLikeCode("Just a normal string of text.")).toBe(false);
+    expect(stringUtils.looksLikeCode("Hello world!")).toBe(false);
+    expect(stringUtils.looksLikeCode("12345")).toBe(false);
   });
 });

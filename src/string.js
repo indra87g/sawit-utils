@@ -60,7 +60,7 @@ export const findTopSuggestions = (input, commands = [], limit = 3) => {
  * @returns {string} The escaped string.
  */
 
-export function escapeHtml(text = "") {
+export function escapeHTML(text = "") {
   const s = text == null ? "" : String(text);
   return s
     .replace(/&/g, "&amp;")
@@ -68,6 +68,11 @@ export function escapeHtml(text = "") {
     .replace(/>/g, "&gt;");
 }
 
+/**
+ * Checks if a given text looks like code based on common programming patterns.
+ * @param {string} text - The input text to check.
+ * @returns {boolean} True if the text looks like code, false otherwise.
+ */
 export function looksLikeCode(text = "") {
   const codePatterns = [
     /```/,
