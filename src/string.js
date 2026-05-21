@@ -59,13 +59,27 @@ export const findTopSuggestions = (input, commands = [], limit = 3) => {
  * @param {string} text - The input string to escape.
  * @returns {string} The escaped string.
  */
-export const escapeHTML = (text) => {
-  if (!text) return "";
-  return text
-    .toString()
+
+export function escapeHtml(text = "") {
+  const s = text == null ? "" : String(text);
+  return s
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-};
+    .replace(/>/g, "&gt;");
+}
+
+export function looksLikeCode(text = "") {
+  const codePatterns = [
+    /```/,
+    /\bfunction\b/,
+    /\bconst\b/,
+    /\blet\b/,
+    /\bvar\b/,
+    /\bclass\b/,
+    /=>/,
+    /console\.log/,
+    /<\/?[a-z][\s\S]*>/i,
+  ];
+
+  return codePatterns.some((r) => r.test(text));
+}
