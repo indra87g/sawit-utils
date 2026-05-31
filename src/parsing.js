@@ -1,3 +1,9 @@
+/**
+ * Extracts the message body from various message object formats (e.g., from WhatsApp).
+ *
+ * @param {any} m - The message object.
+ * @returns {string} The extracted message text, or an empty string if not found.
+ */
 export const extractMessageBody = (m) => {
   const msg = m?.msg || m;
   if (!msg) return "";
@@ -26,6 +32,13 @@ export const extractMessageBody = (m) => {
   return directText || "";
 };
 
+/**
+ * Extracts a phone number or sender ID from a message object.
+ *
+ * @param {any} msg - The message object.
+ * @param {{netSuffix?: string}} [options={ netSuffix: "@s.whatsapp.net" }] - Options for extracting the number.
+ * @returns {string|undefined} The extracted number/ID, or undefined if not found.
+ */
 export const extractNumber = (
   msg,
   options = { netSuffix: "@s.whatsapp.net" },
@@ -36,6 +49,13 @@ export const extractNumber = (
   return undefined;
 };
 
+/**
+ * Parses a command string into its prefix, command name, full text, and arguments.
+ *
+ * @param {string} body - The raw command string.
+ * @param {{prefixes?: string[], noPrefix?: boolean}} [setting={ prefixes: [], noPrefix: false }] - Parsing settings.
+ * @returns {{prefix: string, command: string, text: string, args: string[], isHasPrefix: boolean}} The parsed command object.
+ */
 export const parseCommand = (body, setting = { prefixes: [], noPrefix: false }) => {
   const EMPTY_PARSED = {
     prefix: "",
@@ -116,9 +136,22 @@ export const parseCommand = (body, setting = { prefixes: [], noPrefix: false }) 
   };
 };
 
+/**
+ * Converts a string to Title Case (capitalizes the first letter of each word).
+ *
+ * @param {string} [str="hello"] - The string to convert.
+ * @returns {string} The string in Title Case.
+ */
 export const toTitleCase = (str = "hello") =>
   String(str).replace(/\b\w/g, (c) => c.toUpperCase());
 
+/**
+ * Parses mentions (e.g., @1234567890) from a text string.
+ *
+ * @param {string} text - The text containing mentions.
+ * @param {{netSuffix?: string}} [options={ netSuffix: "@s.whatsapp.net" }] - Options for formatting the parsed mentions.
+ * @returns {string[]} An array of extracted mention IDs.
+ */
 export const parseMentions = (text, options = { netSuffix: "@s.whatsapp.net" }) => {
   const result = [];
   if (typeof text !== "string" || !text.includes("@")) return result;

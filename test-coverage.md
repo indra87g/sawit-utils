@@ -17,3 +17,22 @@
 | src/string.js | 97.5% | 95.23% | 100% | 100% | 28 |
 | src/validation.js | 95.83% | 94.44% | 100% | 100% | 68 |
 | src/scraper/igdl.js | 90.32% | 55.55% | 66.66% | 96.42% | 64 |
+
+## 2026-05-31
+
+**Tests Summary**
+- Passed: 36
+- Failed: 0
+- Skipped: 0
+
+**Coverage Summary**
+- All files: 49.39%
+- src/array.js: 33.33% (Uncovered: 10-11, 22-27, 38)
+- src/format.js: 96.22% (Uncovered: 82-83)
+- src/index.js: 100%
+- src/parsing.js: 8.92% (Uncovered: multiple lines)
+- src/request.js: 6.12% (Uncovered: 28-181)
+- src/string.js: 100%
+- src/validation.js: 100%
+- src/watcher.js: 16.9% (Uncovered: multiple lines)
+- src/scraper/igdl.js: 96.42% (Uncovered: 64)
