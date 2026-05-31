@@ -1,6 +1,6 @@
 {
   "name": "@indra87g/sawit-utils",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "license": "MIT",
   "exports": "./src/index.js",
   "types": "./src/index.d.ts"
