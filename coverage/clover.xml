@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1780223985462" clover="3.2.0">
-  <project timestamp="1780223985463" name="All files">
+<coverage generated="1780230570066" clover="3.2.0">
+  <project timestamp="1780230570066" name="All files">
     <metrics statements="330" coveredstatements="163" conditionals="253" coveredconditionals="105" methods="63" coveredmethods="31" elements="646" coveredelements="299" complexity="0" loc="330" ncloc="330" packages="2" files="9" classes="9"/>
     <package name="src">
       <metrics statements="302" coveredstatements="136" conditionals="235" coveredconditionals="95" methods="60" coveredmethods="29"/>
@@ -21,24 +21,24 @@
       </file>
       <file name="format.js" path="/app/src/format.js">
         <metrics statements="53" coveredstatements="51" conditionals="56" coveredconditionals="49" methods="9" coveredmethods="9"/>
-        <line num="8" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="8" count="2" type="cond" truecount="1" falsecount="0"/>
         <line num="9" count="4" type="stmt"/>
         <line num="10" count="4" type="cond" truecount="4" falsecount="0"/>
         <line num="11" count="3" type="cond" truecount="4" falsecount="0"/>
         <line num="12" count="2" type="cond" truecount="4" falsecount="0"/>
         <line num="13" count="1" type="stmt"/>
-        <line num="21" count="1" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
         <line num="22" count="4" type="cond" truecount="2" falsecount="0"/>
         <line num="23" count="3" type="cond" truecount="2" falsecount="0"/>
         <line num="24" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="25" count="1" type="stmt"/>
-        <line num="33" count="1" type="stmt"/>
+        <line num="33" count="2" type="stmt"/>
         <line num="34" count="1" type="stmt"/>
         <line num="35" count="1" type="stmt"/>
         <line num="36" count="1" type="stmt"/>
         <line num="38" count="1" type="stmt"/>
         <line num="39" count="3" type="stmt"/>
-        <line num="48" count="1" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
         <line num="57" count="4" type="cond" truecount="3" falsecount="1"/>
         <line num="59" count="3" type="stmt"/>
         <line num="60" count="3" type="stmt"/>
@@ -50,10 +50,10 @@
         <line num="87" count="11" type="stmt"/>
         <line num="88" count="11" type="stmt"/>
         <line num="91" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="101" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="101" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="102" count="1" type="stmt"/>
         <line num="103" count="1" type="stmt"/>
-        <line num="120" count="1" type="stmt"/>
+        <line num="120" count="2" type="stmt"/>
         <line num="121" count="1" type="stmt"/>
         <line num="122" count="1" type="stmt"/>
         <line num="123" count="1" type="stmt"/>
@@ -151,8 +151,8 @@
       </file>
       <file name="request.js" path="/app/src/request.js">
         <metrics statements="49" coveredstatements="3" conditionals="29" coveredconditionals="0" methods="13" coveredmethods="0"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
         <line num="28" count="0" type="stmt"/>
         <line num="29" count="0" type="stmt"/>
         <line num="31" count="0" type="stmt"/>
@@ -199,11 +199,11 @@
         <line num="163" count="0" type="stmt"/>
         <line num="172" count="0" type="stmt"/>
         <line num="181" count="0" type="stmt"/>
-        <line num="188" count="1" type="stmt"/>
+        <line num="188" count="2" type="stmt"/>
       </file>
       <file name="string.js" path="/app/src/string.js">
         <metrics statements="28" coveredstatements="28" conditionals="21" coveredconditionals="20" methods="8" coveredmethods="8"/>
-        <line num="8" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="8" count="2" type="cond" truecount="1" falsecount="0"/>
         <line num="9" count="7" type="cond" truecount="2" falsecount="0"/>
         <line num="10" count="6" type="cond" truecount="2" falsecount="0"/>
         <line num="11" count="5" type="cond" truecount="2" falsecount="0"/>
@@ -220,7 +220,7 @@
         <line num="28" count="15" type="cond" truecount="1" falsecount="1"/>
         <line num="30" count="99" type="stmt"/>
         <line num="33" count="4" type="stmt"/>
-        <line num="43" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="43" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="44" count="3" type="cond" truecount="2" falsecount="0"/>
         <line num="45" count="3" type="cond" truecount="2" falsecount="0"/>
         <line num="47" count="2" type="stmt"/>
@@ -234,24 +234,24 @@
       </file>
       <file name="validation.js" path="/app/src/validation.js">
         <metrics statements="21" coveredstatements="21" conditionals="18" coveredconditionals="17" methods="8" coveredmethods="8"/>
-        <line num="6" count="1" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
         <line num="7" count="1" type="cond" truecount="2" falsecount="0"/>
-        <line num="14" count="1" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
         <line num="15" count="1" type="cond" truecount="2" falsecount="0"/>
-        <line num="22" count="1" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
         <line num="23" count="1" type="cond" truecount="2" falsecount="0"/>
-        <line num="30" count="1" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
         <line num="31" count="1" type="cond" truecount="2" falsecount="0"/>
-        <line num="38" count="1" type="stmt"/>
+        <line num="38" count="3" type="stmt"/>
         <line num="39" count="1" type="cond" truecount="2" falsecount="0"/>
-        <line num="46" count="1" type="stmt"/>
+        <line num="46" count="3" type="stmt"/>
         <line num="47" count="2" type="stmt"/>
         <line num="48" count="1" type="stmt"/>
-        <line num="56" count="1" type="stmt"/>
+        <line num="56" count="3" type="stmt"/>
         <line num="57" count="3" type="cond" truecount="2" falsecount="0"/>
         <line num="58" count="2" type="stmt"/>
         <line num="59" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="67" count="1" type="stmt"/>
+        <line num="67" count="3" type="stmt"/>
         <line num="68" count="3" type="cond" truecount="1" falsecount="1"/>
         <line num="70" count="3" type="stmt"/>
         <line num="71" count="3" type="cond" truecount="2" falsecount="0"/>
