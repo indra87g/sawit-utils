@@ -6,14 +6,35 @@ import { basename, join } from "path";
 
 import { toArray } from "./array.js";
 
+/**
+ * Cache for file metadata (mtime and size).
+ * @type {Map<string, {mtimeMs: number, size: number}>}
+ */
 export const FileCache = new Map();
+/**
+ * Cache for loaded modules.
+ * @type {Map<string, any>}
+ */
 export const ModuleCache = new Map();
+/**
+ * Index mapping command names to their respective modules.
+ * @type {Map<string, any>}
+ */
 export const CommandIndex = new Map();
+/**
+ * Set containing event handler modules (modules without a specific command).
+ * @type {Set<any>}
+ */
 export const EventIndex = new Set();
 const Processing = new Set();
 
 const normalizeCommand = (string) => string.replace(/\s+/g, "").toLowerCase();
 
+/**
+ * Indexes a module by its commands or adds it to the event index.
+ *
+ * @param {any} module - The loaded module object.
+ */
 export const indexModule = (module) => {
   if (module.command) {
     for (const key of ["command", "hidden"])
@@ -56,6 +77,12 @@ const loadModule = async (filePath) => {
   }
 };
 
+/**
+ * Scans a directory recursively, loads .js files, and watches for changes.
+ *
+ * @param {string} directory - The path to the directory to scan.
+ * @returns {Promise<void>}
+ */
 export const scanDirectory = async (directory) => {
   const entries = await readdir(directory, { withFileTypes: true });
 

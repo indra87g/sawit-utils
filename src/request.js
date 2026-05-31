@@ -10,9 +10,20 @@ const registry = {
     xemoz: "https://api-xemoz-official.my.id/api/"
 }
 
+/**
+ * A client for making API requests to registered endpoints.
+ */
 export class ApiClient {
   #requestTimeout = 1_000 * 60 * 1.5;
 
+  /**
+   * Makes an HTTP request to the specified URL.
+   *
+   * @param {string} url - The URL to request.
+   * @param {RequestInit} [options={}] - The fetch options.
+   * @returns {Promise<any>} The response data, parsed as JSON, text, or a Buffer depending on the content type.
+   * @throws {Error} If the request fails or times out.
+   */
   async request(url, options = {}) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.#requestTimeout);
@@ -75,6 +86,13 @@ export class ApiClient {
     return this.request(url, options);
   }
 
+  /**
+   * Retrieves the content type of the specified URL using a HEAD request.
+   *
+   * @param {string} url - The URL to check.
+   * @returns {Promise<string|null>} The content type, or null if not available.
+   * @throws {Error} If the request fails or times out.
+   */
   async getContentType(url) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.#requestTimeout);
@@ -98,13 +116,73 @@ export class ApiClient {
     }
   }
   
+  /**
+   * Calls the 'deline' API endpoint.
+   *
+   * @param {string} [path=""] - The API path.
+   * @param {Record<string, string>} [params={}] - The query parameters.
+   * @param {RequestInit} [options] - The fetch options.
+   * @returns {Promise<any>} The response data.
+   */
   async deline(path, params, options)   { return this.#callApi("deline", path, params, options); }
+  /**
+   * Calls the 'faa' API endpoint.
+   *
+   * @param {string} [path=""] - The API path.
+   * @param {Record<string, string>} [params={}] - The query parameters.
+   * @param {RequestInit} [options] - The fetch options.
+   * @returns {Promise<any>} The response data.
+   */
   async faa(path, params, options)      { return this.#callApi("faa", path, params, options); }
+  /**
+   * Calls the 'nexray' API endpoint.
+   *
+   * @param {string} [path=""] - The API path.
+   * @param {Record<string, string>} [params={}] - The query parameters.
+   * @param {RequestInit} [options] - The fetch options.
+   * @returns {Promise<any>} The response data.
+   */
   async nexray(path, params, options)   { return this.#callApi("nexray", path, params, options); }
+  /**
+   * Calls the 'zenzxz' API endpoint.
+   *
+   * @param {string} [path=""] - The API path.
+   * @param {Record<string, string>} [params={}] - The query parameters.
+   * @param {RequestInit} [options] - The fetch options.
+   * @returns {Promise<any>} The response data.
+   */
   async zenzxz(path, params, options)   { return this.#callApi("zenzxz", path, params, options); }
+  /**
+   * Calls the 'lexcode' API endpoint.
+   *
+   * @param {string} [path=""] - The API path.
+   * @param {Record<string, string>} [params={}] - The query parameters.
+   * @param {RequestInit} [options] - The fetch options.
+   * @returns {Promise<any>} The response data.
+   */
   async lexcode(path, params, options)  { return this.#callApi("lexcode", path, params, options); }
+  /**
+   * Calls the 'turu' API endpoint.
+   *
+   * @param {string} [path=""] - The API path.
+   * @param {Record<string, string>} [params={}] - The query parameters.
+   * @param {RequestInit} [options] - The fetch options.
+   * @returns {Promise<any>} The response data.
+   */
   async turu(path, params, options)  { return this.#callApi("turu", path, params, options); }
+  /**
+   * Calls the 'xemoz' API endpoint.
+   *
+   * @param {string} [path=""] - The API path.
+   * @param {Record<string, string>} [params={}] - The query parameters.
+   * @param {RequestInit} [options] - The fetch options.
+   * @returns {Promise<any>} The response data.
+   */
   async xemoz(path, params, options)  { return this.#callApi("xemoz", path, params, options); }
 }
 
+/**
+ * A pre-instantiated API client.
+ * @type {ApiClient}
+ */
 export const api = new ApiClient();

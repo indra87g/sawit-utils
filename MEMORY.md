@@ -48,3 +48,13 @@ Direktori & File Utama:
 **Context:** Working to fix the failing `escapeHTML` test, and thoroughly document the codebase (`request.js` and `looksLikeCode` in `string.js`).
 **Finding:** Typo in `src/string.js` export (`escapeHtml` instead of `escapeHTML`). Tests couldn't use CommonJS `require` since it's an ESM module (Vitest throws SyntaxError), so we used ES Modules `import * as`. `looksLikeCode` successfully identifies programming patterns, and the `request.js` functions were documented with JSDoc and their types exposed in `src/index.d.ts`.
 **Impact:** `test-coverage.md` is updated. 36 out of 36 tests pass. The codebase remains publish-ready for JSR/npm.
+
+## 2024-05-31 — Documentation and Typings update for parsing, request, array and watcher
+**Context:** The codebase lacked JSDoc and up-to-date typings for recently introduced code in `src/request.js`, `src/parsing.js`, `src/array.js`, and `src/watcher.js`. Additionally, a test assertion in `tests/index.test.js` failed due to moving standalone request wrapper exports into a class based `api` instance.
+**Finding:** Typings (`.d.ts`) need to manually reflect classes and their methods carefully (e.g. `export class ApiClient {...}; export const api: ApiClient`). The Vitest tests had to be updated to evaluate `api.request` instead of `request` since they were moved. I also encountered a limitation where attempting to use `require` in commonJS scripts via CLI fails because this is an ES module package (needed to run them with `.cjs` extensions).
+**Impact:** 36 tests pass again successfully. Code coverage metrics are fully tracked, and JSDoc is present, increasing maintainability and fulfilling JSR publishing expectations.
+
+## 2024-05-31 — Modular Test Suite Migration
+**Context:** `tests/index.test.js` became too large and unmanageable, mixing various modules' coverage.
+**Finding:** Test files were modularized into `format.test.js`, `string.test.js`, `validation.test.js`, `index_exports.test.js`, `igdl.test.js`, and `request.test.js`. Care was required when re-importing test utilities to replace references to monolithic file variables with their module-specific namespaces.
+**Impact:** Maintained 100% test passing rate (36 total tests) and coverage, while making the codebase testing suite modular, cleaner, and easier to scale.
