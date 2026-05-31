@@ -1,7 +1,10 @@
+export * from "./array.js";
 export * from "./format.js";
+export * from "./parsing.js";
 export * from "./string.js";
 export * from "./validation.js";
 export * from "./request.js";
+export * from "./watcher.js";
 export { igdl } from "./scraper/igdl.js";
 
 /**

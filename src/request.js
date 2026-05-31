@@ -1,159 +1,110 @@
 import { isMimeAudio, isMimeImage, isMimeVideo } from "./validation.js";
 
-const requestTimeout = 1_000 * 60 * 1.5;
+const registry = {
+    turu: "https://mending-turu.web.id/api/",
+    lexcode: "https://api.lexcode.biz.id/api/",
+    zenzxz: "https://api.zenzxz.my.id/",
+    faa: "https://api-faa.my.id/faa",
+    nexray: "https://api.nexray.web.id/",
+    deline: "https://api.deline.web.id/",
+    xemoz: "https://api-xemoz-official.my.id/api/"
+}
 
-/**
- * Performs a generic HTTP request with a timeout.
- * Returns text, JSON, or Buffer based on the response Content-Type.
- *
- * @param {string} url - The URL to request.
- * @param {RequestInit} [options={}] - The fetch options.
- * @returns {Promise<any>} The response data.
- */
-export const request = async (url, options = {}) => {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), requestTimeout);
+export class ApiClient {
+  #requestTimeout = 1_000 * 60 * 1.5;
 
-  try {
-    options.signal = controller.signal;
+  async request(url, options = {}) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), this.#requestTimeout);
 
-    const response = await fetch(url, options);
+    try {
+      options.signal = controller.signal;
+      const response = await fetch(url, options);
 
-    if (!response.ok) {
-      await response.body?.cancel();
-      throw new Error(response.statusText);
+      if (!response.ok) {
+        await response.body?.cancel();
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+
+      const contentType = response.headers.get("content-type");
+
+      if (
+        isMimeAudio(contentType) ||
+        isMimeImage(contentType) ||
+        isMimeVideo(contentType) ||
+        contentType?.includes("octet")
+      ) {
+        return Buffer.from(await response.arrayBuffer());
+      }
+
+      if (contentType?.startsWith("text")) {
+        return await response.text();
+      }
+
+      // Membaca text terlebih dahulu untuk mencegah error JSON parsing jika body kosong
+      const text = await response.text();
+      return text ? JSON.parse(text) : null;
+    } catch (error) {
+      if (controller.signal.aborted) {
+        throw new Error(`Request timeout after ${this.#requestTimeout}ms`);
+      }
+      throw error;
+    } finally {
+      clearTimeout(timeoutId);
     }
-
-    const contentType = response.headers.get("content-type");
-
-    if (
-      isMimeAudio(contentType) ||
-      isMimeImage(contentType) ||
-      isMimeVideo(contentType) ||
-      contentType?.includes("octet")
-    )
-      return Buffer.from(await response.arrayBuffer());
-
-    if (contentType?.startsWith("text")) return await response.text();
-
-    return await response.json();
-  } catch (error) {
-    if (controller.signal.aborted)
-      throw new Error(`Request timeout after ${requestTimeout}ms`);
-    throw error;
-  } finally {
-    clearTimeout(timeoutId);
   }
-};
 
-/**
- * Performs a HEAD request to determine the content type of a URL.
- *
- * @param {string} url - The URL to check.
- * @returns {Promise<string | null>} The content type, or null if not found.
- */
-export const getContentType = async (url) => {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), requestTimeout);
+  #buildUrl(baseUrl, path, params) {
+    const cleanPath = path.startsWith("/") ? path.slice(1) : path;
+    const url = new URL(cleanPath, baseUrl);
 
-  try {
-    const response = await fetch(url, {
-      method: "HEAD",
-      signal: controller.signal,
-    });
-
-    if (!response.ok) throw new Error(response.statusText);
-
-    return response.headers.get("content-type");
-  } catch (error) {
-    if (controller.signal.aborted)
-      throw new Error(`Request timeout after ${requestTimeout}ms`);
-    throw error;
-  } finally {
-    clearTimeout(timeoutId);
+    if (params && Object.keys(params).length > 0) {
+      url.search = new URLSearchParams(params).toString();
+    }
+    
+    return url.toString();
   }
-};
+  
+  async #callApi(apiName, path = "", params = {}, options) {
+    const baseUrl = registry[apiName];
+    if (!baseUrl) {
+      throw new Error(`API Endpoint '${apiName}' is not registered on Registry.`);
+    }
+    
+    const url = this.#buildUrl(baseUrl, path, params);
+    return this.request(url, options);
+  }
 
-/**
- * Makes a request to the Deline API.
- *
- * @param {string} [path=""] - The API path.
- * @param {Record<string, string>} [params={}] - The query parameters.
- * @param {RequestInit} [options] - Optional fetch options.
- * @returns {Promise<any>} The API response.
- */
-export const deline = async (path = "", params = {}, options) =>
-  request(
-    `https://api.deline.web.id/` + path + "?" + new URLSearchParams(params),
-    options,
-  );
+  async getContentType(url) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), this.#requestTimeout);
 
-/**
- * Makes a request to the FAA API.
- *
- * @param {string} [path=""] - The API path.
- * @param {Record<string, string>} [params={}] - The query parameters.
- * @param {RequestInit} [options] - Optional fetch options.
- * @returns {Promise<any>} The API response.
- */
-export const faa = async (path = "", params = {}, options) =>
-  request(
-    `https://api-faa.my.id/faa/` + path + "?" + new URLSearchParams(params),
-    options,
-  );
+    try {
+      const response = await fetch(url, {
+        method: "HEAD",
+        signal: controller.signal,
+      });
 
-/**
- * Makes a request to the NekoLabs API.
- *
- * @param {string} [path=""] - The API path.
- * @param {Record<string, string>} [params={}] - The query parameters.
- * @param {RequestInit} [options] - Optional fetch options.
- * @returns {Promise<any>} The API response.
- */
-export const nekolabs = async (path = "", params = {}, options) =>
-  request(
-    `https://rynekoo-api.hf.space/` + path + "?" + new URLSearchParams(params),
-    options,
-  );
+      if (!response.ok) throw new Error(response.statusText);
 
-/**
- * Makes a request to the Nexray API.
- *
- * @param {string} [path=""] - The API path.
- * @param {Record<string, string>} [params={}] - The query parameters.
- * @param {RequestInit} [options] - Optional fetch options.
- * @returns {Promise<any>} The API response.
- */
-export const nexray = async (path = "", params = {}, options) =>
-  request(
-    `https://api.nexray.web.id/` + path + "?" + new URLSearchParams(params),
-    options,
-  );
+      return response.headers.get("content-type");
+    } catch (error) {
+      if (controller.signal.aborted) {
+        throw new Error(`Request timeout after ${this.#requestTimeout}ms`);
+      }
+      throw error;
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  }
+  
+  async deline(path, params, options)   { return this.#callApi("deline", path, params, options); }
+  async faa(path, params, options)      { return this.#callApi("faa", path, params, options); }
+  async nexray(path, params, options)   { return this.#callApi("nexray", path, params, options); }
+  async zenzxz(path, params, options)   { return this.#callApi("zenzxz", path, params, options); }
+  async lexcode(path, params, options)  { return this.#callApi("lexcode", path, params, options); }
+  async turu(path, params, options)  { return this.#callApi("turu", path, params, options); }
+  async xemoz(path, params, options)  { return this.#callApi("xemoz", path, params, options); }
+}
 
-/**
- * Makes a request to the Zenzxz API.
- *
- * @param {string} [path=""] - The API path.
- * @param {Record<string, string>} [params={}] - The query parameters.
- * @param {RequestInit} [options] - Optional fetch options.
- * @returns {Promise<any>} The API response.
- */
-export const zenzxz = async (path = "", params = {}, options) =>
-  request(
-    `https://api.zenzxz.my.id/` + path + "?" + new URLSearchParams(params),
-    options,
-  );
-
-/**
- * Makes a request to the Lexcode API.
- *
- * @param {string} [path=""] - The API path.
- * @param {Record<string, string>} [params={}] - The query parameters.
- * @param {RequestInit} [options] - Optional fetch options.
- * @returns {Promise<any>} The API response.
- */
-export const lexcode = async (path = "", params = {}, options) =>
-  request(
-    `https://api.lexcode.biz.id/api/` + path + "?" + new URLSearchParams(params),
-    options,
-  );
+export const api = new ApiClient();
