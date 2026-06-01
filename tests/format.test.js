@@ -9,7 +9,8 @@ describe("Format Utils", () => {
 
   test("formatSize", () => {
     expect(formatUtils.formatSize(100000000)).toBe("95.37 MiB");
-    expect(formatUtils.formatSize(0)).toBe("0 yBytes");
+    expect(formatUtils.formatSize(0)).toBe("0 Bytes");
+    expect(formatUtils.formatSize(512)).toBe("512.00 Bytes");
   });
 
   test("greeting", () => {
