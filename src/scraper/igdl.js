@@ -29,21 +29,35 @@ export async function igdl(url) {
     formData.append("tt", "a66b23d8bfa4878536d788ac3d33d1a6");
     formData.append("ts", "1771729612");
 
-    const response = await fetch(`https://reelsvideo.io/reel/${reelCode}/`, {
-      method: "POST",
-      headers: {
-        Accept: "*/*",
-        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        "HX-Request": "true",
-        Origin: "https://reelsvideo.io",
-        Referer: "https://reelsvideo.io/id",
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-      },
-      body: formData,
-    });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 1_000 * 30);
 
-    const html = await response.text();
+    let html;
+    try {
+      const response = await fetch(`https://reelsvideo.io/reel/${reelCode}/`, {
+        method: "POST",
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+          "HX-Request": "true",
+          Origin: "https://reelsvideo.io",
+          Referer: "https://reelsvideo.io/id",
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        },
+        body: formData,
+        signal: controller.signal,
+      });
+
+      html = await response.text();
+    } catch (error) {
+      if (controller.signal.aborted) {
+        throw new Error("Request timeout after 30000ms");
+      }
+      throw error;
+    } finally {
+      clearTimeout(timeoutId);
+    }
 
     const usernameMatch = html.match(
       /<span[^>]*class="text-400-16-18"[^>]*>([^<]+)<\/span>/,
