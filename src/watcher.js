@@ -52,7 +52,7 @@ const unindexModule = (filePath) => {
   if (cachedModule.command) {
     for (const key of ["command", "hidden"])
       for (const value of toArray(cachedModule[key]))
-        CommandIndex.delete(normalizeCommand(value), null);
+        CommandIndex.delete(normalizeCommand(value));
   } else EventIndex.delete(cachedModule);
 
   ModuleCache.delete(filePath);
