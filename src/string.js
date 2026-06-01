@@ -41,7 +41,9 @@ export const levenshtein = (value, other, maxDistance = Infinity) => {
  * @returns {string[]} An array of top suggested commands.
  */
 export const findTopSuggestions = (input, commands = [], limit = 3) => {
-  const query = String(input || "").toLowerCase().trim();
+  const query = String(input || "")
+    .toLowerCase()
+    .trim();
   if (!query) return [];
 
   return commands
@@ -62,10 +64,7 @@ export const findTopSuggestions = (input, commands = [], limit = 3) => {
 
 export function escapeHTML(text = "") {
   const s = text == null ? "" : String(text);
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 /**

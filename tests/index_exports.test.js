@@ -21,7 +21,6 @@ describe("Index Utils", () => {
   });
 });
 
-
 describe("More additional coverage", () => {
   test("generateUID empty", () => {
     expect(indexUtils.generateUID("")).toBeNull();
@@ -31,7 +30,7 @@ describe("More additional coverage", () => {
   });
   test("formatSize > YB", () => {
     // testing size loop condition coverage
-    expect(indexUtils.formatSize(Math.pow(1024, 20))).toContain("YiB");
+    expect(indexUtils.formatSize(1024 ** 20)).toContain("YiB");
   });
   test("isURL handles invalid type", () => {
     expect(indexUtils.isURL(123)).toBe(false);

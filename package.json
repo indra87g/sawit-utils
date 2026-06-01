@@ -14,13 +14,18 @@
   ],
   "scripts": {
     "start": "node index.js",
-    "test": "vitest run tests"
+    "test": "vitest run tests",
+    "coverage": "vitest run tests --coverage",
+    "lint": "biome check src tests",
+    "format": "biome format --write src tests",
+    "check": "biome check --write src tests"
   },
   "dependencies": {
     "moment": "^2.30.1",
     "moment-timezone": "^0.6.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.4.16",
     "@vitest/coverage-v8": "^4.1.6",
     "vitest": "^4.0.18"
   }

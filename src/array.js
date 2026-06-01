@@ -42,6 +42,9 @@ export const randomInteger = (min, max) =>
  *
  * @template T
  * @param {T[]} array - The array to select from.
- * @returns {T} A randomly selected element from the array.
+ * @returns {T|null} A randomly selected element, or null if the array is empty.
  */
-export const randomValue = (array) => array[Math.floor(Math.random() * array.length)];
+export const randomValue = (array) => {
+  if (!array || array.length === 0) return null;
+  return array[Math.floor(Math.random() * array.length)];
+};

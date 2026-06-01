@@ -35,9 +35,7 @@ export const toTime = (ms) => {
   const min = Math.floor(ms / (1000 * 60)) % 60;
   const hrs = Math.floor(ms / (1000 * 60 * 60));
 
-  return [hrs, min, sec]
-    .map((v) => String(v).padStart(2, "0"))
-    .join(":");
+  return [hrs, min, sec].map((v) => String(v).padStart(2, "0")).join(":");
 };
 
 /**
@@ -54,19 +52,11 @@ export const formatNumber = (number) => Number(number).toLocaleString("en-US");
  * @returns {string} The formatted size string.
  */
 export function formatSize(byteCount, withPerSecond = false) {
-  if (!byteCount) return `0 yBytes${withPerSecond ? "/s" : ""}`;
+  if (!byteCount) return `0 Bytes${withPerSecond ? "/s" : ""}`;
 
-  let index = 8;
+  let index = 0;
   let size = byteCount;
-  const bytes = [
-    "yBytes",
-    "zBytes",
-    "aBytes",
-    "fBytes",
-    "pBytes",
-    "nBytes",
-    "µBytes",
-    "mBytes",
+  const units = [
     "Bytes",
     "KiB",
     "MiB",
@@ -78,17 +68,12 @@ export function formatSize(byteCount, withPerSecond = false) {
     "YiB",
   ];
 
-  while (size < 1 && index > 0) {
-    size *= 1024;
-    index--;
-  }
-
-  while (size >= 1024 && index < bytes.length - 1) {
+  while (size >= 1024 && index < units.length - 1) {
     size /= 1024;
     index++;
   }
 
-  return `${size.toFixed(2)} ${bytes[index]}${withPerSecond ? "/s" : ""}`;
+  return `${size.toFixed(2)} ${units[index]}${withPerSecond ? "/s" : ""}`;
 }
 
 /**
@@ -150,5 +135,5 @@ export function convertMsToDuration(ms) {
   if (!hasLargerUnits && duration.milliseconds() > 0)
     parts.push(`${duration.milliseconds()} milliseconds`);
 
-  return parts.join(" ") || "0 detik";
+  return parts.join(" ") || "0 seconds";
 }

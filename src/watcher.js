@@ -1,8 +1,8 @@
-import { setTimeout as delay } from "timers/promises";
+import { setTimeout as delay } from "node:timers/promises";
 
-import { watch } from "fs";
-import { readdir, stat } from "fs/promises";
-import { basename, join } from "path";
+import { watch } from "node:fs";
+import { readdir, stat } from "node:fs/promises";
+import { join } from "node:path";
 
 import { toArray } from "./array.js";
 
@@ -52,7 +52,7 @@ const unindexModule = (filePath) => {
   if (cachedModule.command) {
     for (const key of ["command", "hidden"])
       for (const value of toArray(cachedModule[key]))
-        CommandIndex.delete(normalizeCommand(value), null);
+        CommandIndex.delete(normalizeCommand(value));
   } else EventIndex.delete(cachedModule);
 
   ModuleCache.delete(filePath);
@@ -91,7 +91,6 @@ export const scanDirectory = async (directory) => {
 
     if (entry.isDirectory()) {
       await scanDirectory(fullPath);
-      continue;
     } else if (entry.isFile() || fullPath.endsWith(".js")) {
       const stats = await stat(fullPath);
 
@@ -108,7 +107,7 @@ export const scanDirectory = async (directory) => {
 };
 
 const watchDirectory = async (directory) => {
-  watch(directory, (event, fileName) => {
+  watch(directory, (_event, fileName) => {
     if (!fileName) return;
 
     handleChange(join(directory, fileName));
