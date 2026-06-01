@@ -39,7 +39,6 @@ describe("Format Utils", () => {
   });
 });
 
-
 describe("Missing Coverage For format.js", () => {
   test("greeting handles different hours", () => {
     const afternoon = new Date("2023-01-01T12:00:00Z").getTime();
@@ -56,7 +55,9 @@ describe("Missing Coverage For format.js", () => {
 
   test("formatTime", () => {
     const time = new Date("2023-01-01T08:00:00Z").getTime();
-    expect(typeof formatUtils.formatTime(time, "en-US", { timeZone: "UTC" })).toBe("string");
+    expect(
+      typeof formatUtils.formatTime(time, "en-US", { timeZone: "UTC" }),
+    ).toBe("string");
   });
 
   test("convertMsToDuration larger units", () => {
@@ -65,14 +66,8 @@ describe("Missing Coverage For format.js", () => {
   });
 });
 
-
 describe("Additional coverage", () => {
   test("convertMsToDuration uses milliseconds if no larger units", () => {
     expect(formatUtils.convertMsToDuration(500)).toBe("500 milliseconds");
   });
-
-
-
-
-
 });

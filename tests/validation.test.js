@@ -3,7 +3,9 @@ import { describe, expect, test } from "vitest";
 
 describe("Validation Utils", () => {
   test("isWhatsAppURL handles short domain", () => {
-    expect(validationUtils.isWhatsAppURL("https://wa.me/1234567890")).toBe(true);
+    expect(validationUtils.isWhatsAppURL("https://wa.me/1234567890")).toBe(
+      true,
+    );
   });
 
   test("isMime types", () => {
@@ -25,7 +27,9 @@ describe("Validation Utils", () => {
   });
 
   test("isWhatsAppURL", () => {
-    expect(validationUtils.isWhatsAppURL("https://chat.whatsapp.com/invite")).toBe(true);
+    expect(
+      validationUtils.isWhatsAppURL("https://chat.whatsapp.com/invite"),
+    ).toBe(true);
     expect(validationUtils.isWhatsAppURL("https://google.com")).toBe(false);
   });
 });

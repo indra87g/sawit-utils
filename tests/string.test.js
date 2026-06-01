@@ -32,9 +32,7 @@ describe("String Utils", () => {
   });
 });
 
-
 describe("String Utils - looksLikeCode", () => {
-
   test("identifies code snippets", () => {
     expect(stringUtils.looksLikeCode("function test() {}")).toBe(true);
     expect(stringUtils.looksLikeCode("const a = 1;")).toBe(true);
@@ -44,11 +42,15 @@ describe("String Utils - looksLikeCode", () => {
     expect(stringUtils.looksLikeCode("() => {}")).toBe(true);
     expect(stringUtils.looksLikeCode("console.log('test')")).toBe(true);
     expect(stringUtils.looksLikeCode("<div>test</div>")).toBe(true);
-    expect(stringUtils.looksLikeCode("```javascript\nconsole.log('test')\n```")).toBe(true);
+    expect(
+      stringUtils.looksLikeCode("```javascript\nconsole.log('test')\n```"),
+    ).toBe(true);
   });
 
   test("identifies non-code text", () => {
-    expect(stringUtils.looksLikeCode("Just a normal string of text.")).toBe(false);
+    expect(stringUtils.looksLikeCode("Just a normal string of text.")).toBe(
+      false,
+    );
     expect(stringUtils.looksLikeCode("Hello world!")).toBe(false);
     expect(stringUtils.looksLikeCode("12345")).toBe(false);
   });

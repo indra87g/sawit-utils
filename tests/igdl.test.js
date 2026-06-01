@@ -1,5 +1,5 @@
 import { igdl } from "../src/scraper/igdl.js";
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test } from "vitest";
 
 describe("igdl tests", () => {
   test("igdl with valid url", async () => {
@@ -10,7 +10,6 @@ describe("igdl tests", () => {
     expect(result.error).toBe("URL Instagram tidak valid");
   });
 });
-
 
 describe("More igdl tests", () => {
   test("igdl valid regex pattern logic", async () => {
