@@ -1,0 +1,3 @@
+[submodule "sawit-utils-rust"]
+	path = sawit-utils-rust
+	url = https://github.com/blackberryhazard-org/sawit-utils-rust
