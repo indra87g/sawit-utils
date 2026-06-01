@@ -42,6 +42,8 @@ export function igdl(url: string): Promise<import("./types/igdl.js").IgdlResult>
 
 // Request
 export class ApiClient {
+  constructor(config?: { registry?: Record<string, string>; timeout?: number });
+  register(name: string, baseUrl: string): void;
   request(url: string, options?: RequestInit): Promise<any>;
   getContentType(url: string): Promise<string | null>;
   deline(path?: string, params?: Record<string, string>, options?: RequestInit): Promise<any>;
@@ -59,7 +61,7 @@ export const api: ApiClient;
 export function toArray<T>(value: T | T[] | undefined | null): T[];
 export function shuffleArray<T>(array: T[]): T[];
 export function randomInteger(min: number, max: number): number;
-export function randomValue<T>(array: T[]): T;
+export function randomValue<T>(array: T[]): T | null;
 
 // Parsing
 export function extractMessageBody(m: any): string;

@@ -1,6 +1,6 @@
 import { isMimeAudio, isMimeImage, isMimeVideo } from "./validation.js";
 
-const registry = {
+const defaultRegistry = {
     turu: "https://mending-turu.web.id/api/",
     lexcode: "https://api.lexcode.biz.id/api/",
     zenzxz: "https://api.zenzxz.my.id/",
@@ -15,6 +15,27 @@ const registry = {
  */
 export class ApiClient {
   #requestTimeout = 1_000 * 60 * 1.5;
+  #registry;
+
+  /**
+   * @param {Object} [config={}] - Client configuration.
+   * @param {Record<string, string>} [config.registry] - Extra endpoints to register, merged over (and overriding) the built-in defaults.
+   * @param {number} [config.timeout] - Request timeout in milliseconds.
+   */
+  constructor(config = {}) {
+    this.#registry = { ...defaultRegistry, ...(config.registry ?? {}) };
+    if (typeof config.timeout === "number") this.#requestTimeout = config.timeout;
+  }
+
+  /**
+   * Registers (or overrides) a named endpoint at runtime.
+   *
+   * @param {string} name - The endpoint name.
+   * @param {string} baseUrl - The base URL for the endpoint.
+   */
+  register(name, baseUrl) {
+    this.#registry[name] = baseUrl;
+  }
 
   /**
    * Makes an HTTP request to the specified URL.
@@ -77,7 +98,7 @@ export class ApiClient {
   }
   
   async #callApi(apiName, path = "", params = {}, options) {
-    const baseUrl = registry[apiName];
+    const baseUrl = this.#registry[apiName];
     if (!baseUrl) {
       throw new Error(`API Endpoint '${apiName}' is not registered on Registry.`);
     }
