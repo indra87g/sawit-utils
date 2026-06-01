@@ -35,9 +35,7 @@ export const toTime = (ms) => {
   const min = Math.floor(ms / (1000 * 60)) % 60;
   const hrs = Math.floor(ms / (1000 * 60 * 60));
 
-  return [hrs, min, sec]
-    .map((v) => String(v).padStart(2, "0"))
-    .join(":");
+  return [hrs, min, sec].map((v) => String(v).padStart(2, "0")).join(":");
 };
 
 /**
@@ -58,7 +56,17 @@ export function formatSize(byteCount, withPerSecond = false) {
 
   let index = 0;
   let size = byteCount;
-  const units = ["Bytes", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"];
+  const units = [
+    "Bytes",
+    "KiB",
+    "MiB",
+    "GiB",
+    "TiB",
+    "PiB",
+    "EiB",
+    "ZiB",
+    "YiB",
+  ];
 
   while (size >= 1024 && index < units.length - 1) {
     size /= 1024;

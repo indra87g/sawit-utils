@@ -56,7 +56,10 @@ export const extractNumber = (
  * @param {{prefixes?: string[], noPrefix?: boolean}} [setting={ prefixes: [], noPrefix: false }] - Parsing settings.
  * @returns {{prefix: string, command: string, text: string, args: string[], isHasPrefix: boolean}} The parsed command object.
  */
-export const parseCommand = (body, setting = { prefixes: [], noPrefix: false }) => {
+export const parseCommand = (
+  body,
+  setting = { prefixes: [], noPrefix: false },
+) => {
   const EMPTY_PARSED = {
     prefix: "",
     command: "",
@@ -70,7 +73,7 @@ export const parseCommand = (body, setting = { prefixes: [], noPrefix: false }) 
   body = body.trim();
   if (!body) return EMPTY_PARSED;
 
-  let first = body[Symbol.iterator]().next().value;
+  const first = body[Symbol.iterator]().next().value;
   if (!first) return EMPTY_PARSED;
 
   if (first === "\u200D" || first === "\uFE0F" || first.trim() === "")
@@ -152,13 +155,16 @@ export const toTitleCase = (str = "hello") =>
  * @param {{netSuffix?: string}} [options={ netSuffix: "@s.whatsapp.net" }] - Options for formatting the parsed mentions.
  * @returns {string[]} An array of extracted mention IDs.
  */
-export const parseMentions = (text, options = { netSuffix: "@s.whatsapp.net" }) => {
+export const parseMentions = (
+  text,
+  options = { netSuffix: "@s.whatsapp.net" },
+) => {
   const result = [];
   if (typeof text !== "string" || !text.includes("@")) return result;
 
   const regex = /@([0-9]{5,16}|0)/g;
-  let match;
-  while ((match = regex.exec(text)) !== null) result.push(match[1] + options.netSuffix);
+  for (let match = regex.exec(text); match !== null; match = regex.exec(text))
+    result.push(match[1] + options.netSuffix);
 
   return result;
 };
