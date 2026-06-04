@@ -36,8 +36,22 @@ export class ApiClient {
    */
   constructor(config = {}) {
     this.#registry = { ...defaultRegistry, ...(config.registry ?? {}) };
-    if (typeof config.timeout === "number")
+    if (typeof config.timeout === "number") {
       this.#requestTimeout = config.timeout;
+    }
+    
+    return new Proxy(this, {
+      get: (target, prop, receiver) => {
+        if (prop in target || typeof prop === "symbol") {
+          const value = Reflect.get(target, prop, receiver);
+          return typeof value === "function" ? value.bind(target) : value;
+        }
+
+        return async (path = "", params = {}, options = {}) => {
+          return target.callApiFromProxy(prop, path, params, options);
+        };
+      }
+    });  
   }
 
   /**
@@ -48,6 +62,16 @@ export class ApiClient {
    */
   register(name, baseUrl) {
     this.#registry[name] = baseUrl;
+  }
+  
+  async callApiFromProxy(apiName, path = "", params = {}, options = {}) {
+    const baseUrl = this.#registry[apiName];
+    if (!baseUrl) {
+      throw new Error(`API Endpoint '${apiName}' is not registered on Registry.`);
+    }
+
+    const url = this.#buildUrl(baseUrl, path, params);
+    return this.request(url, options);
   }
 
   /**
@@ -88,8 +112,7 @@ export class ApiClient {
       if (contentType?.startsWith("text")) {
         return await response.text();
       }
-
-      // Membaca text terlebih dahulu untuk mencegah error JSON parsing jika body kosong
+      
       const text = await response.text();
       return text ? JSON.parse(text) : null;
     } catch (error) {
@@ -101,7 +124,7 @@ export class ApiClient {
       clearTimeout(timeoutId);
     }
   }
-
+  
   #buildUrl(baseUrl, path, params) {
     const cleanPath = path.startsWith("/") ? path.slice(1) : path;
     const url = new URL(cleanPath, baseUrl);
@@ -113,40 +136,13 @@ export class ApiClient {
     return url.toString();
   }
 
-  async #callApi(apiName, path = "", params = {}, options) {
-    const baseUrl = this.#registry[apiName];
-    if (!baseUrl) {
-      throw new Error(
-        `API Endpoint '${apiName}' is not registered on Registry.`,
-      );
-    }
-
-    const url = this.#buildUrl(baseUrl, path, params);
-    return this.request(url, options);
-  }
-
-  /**
-   * Retrieves the content type of the specified URL using a HEAD request.
-   *
-   * @param {string} url - The URL to check.
-   * @returns {Promise<string|null>} The content type, or null if not available.
-   * @throws {Error} If the request fails or times out.
-   */
   async getContentType(url) {
     const controller = new AbortController();
-    const timeoutId = setTimeout(
-      () => controller.abort(),
-      this.#requestTimeout,
-    );
+    const timeoutId = setTimeout(() => controller.abort(), this.#requestTimeout);
 
     try {
-      const response = await fetch(url, {
-        method: "HEAD",
-        signal: controller.signal,
-      });
-
+      const response = await fetch(url, { method: "HEAD", signal: controller.signal });
       if (!response.ok) throw new Error(response.statusText);
-
       return response.headers.get("content-type");
     } catch (error) {
       if (controller.signal.aborted) {
@@ -156,84 +152,6 @@ export class ApiClient {
     } finally {
       clearTimeout(timeoutId);
     }
-  }
-
-  /**
-   * Calls the 'deline' API endpoint.
-   *
-   * @param {string} [path=""] - The API path.
-   * @param {Record<string, string>} [params={}] - The query parameters.
-   * @param {RequestInit} [options] - The fetch options.
-   * @returns {Promise<any>} The response data.
-   */
-  async deline(path, params, options) {
-    return this.#callApi("deline", path, params, options);
-  }
-  /**
-   * Calls the 'faa' API endpoint.
-   *
-   * @param {string} [path=""] - The API path.
-   * @param {Record<string, string>} [params={}] - The query parameters.
-   * @param {RequestInit} [options] - The fetch options.
-   * @returns {Promise<any>} The response data.
-   */
-  async faa(path, params, options) {
-    return this.#callApi("faa", path, params, options);
-  }
-  /**
-   * Calls the 'nexray' API endpoint.
-   *
-   * @param {string} [path=""] - The API path.
-   * @param {Record<string, string>} [params={}] - The query parameters.
-   * @param {RequestInit} [options] - The fetch options.
-   * @returns {Promise<any>} The response data.
-   */
-  async nexray(path, params, options) {
-    return this.#callApi("nexray", path, params, options);
-  }
-  /**
-   * Calls the 'zenzxz' API endpoint.
-   *
-   * @param {string} [path=""] - The API path.
-   * @param {Record<string, string>} [params={}] - The query parameters.
-   * @param {RequestInit} [options] - The fetch options.
-   * @returns {Promise<any>} The response data.
-   */
-  async zenzxz(path, params, options) {
-    return this.#callApi("zenzxz", path, params, options);
-  }
-  /**
-   * Calls the 'lexcode' API endpoint.
-   *
-   * @param {string} [path=""] - The API path.
-   * @param {Record<string, string>} [params={}] - The query parameters.
-   * @param {RequestInit} [options] - The fetch options.
-   * @returns {Promise<any>} The response data.
-   */
-  async lexcode(path, params, options) {
-    return this.#callApi("lexcode", path, params, options);
-  }
-  /**
-   * Calls the 'turu' API endpoint.
-   *
-   * @param {string} [path=""] - The API path.
-   * @param {Record<string, string>} [params={}] - The query parameters.
-   * @param {RequestInit} [options] - The fetch options.
-   * @returns {Promise<any>} The response data.
-   */
-  async turu(path, params, options) {
-    return this.#callApi("turu", path, params, options);
-  }
-  /**
-   * Calls the 'xemoz' API endpoint.
-   *
-   * @param {string} [path=""] - The API path.
-   * @param {Record<string, string>} [params={}] - The query parameters.
-   * @param {RequestInit} [options] - The fetch options.
-   * @returns {Promise<any>} The response data.
-   */
-  async xemoz(path, params, options) {
-    return this.#callApi("xemoz", path, params, options);
   }
 }
 
