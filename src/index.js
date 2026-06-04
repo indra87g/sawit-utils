@@ -1,5 +1,4 @@
 export * from "./array.js";
-import * from "./array.js";
 export * from "./format.js";
 export * from "./parsing.js";
 export * from "./string.js";
